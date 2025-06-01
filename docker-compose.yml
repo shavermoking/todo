@@ -1,0 +1,48 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+            args:
+                UID: ${UID}
+                GID: ${GID}
+        container_name: todo-app
+        volumes:
+            -  .:/var/www
+        depends_on:
+            -  todo-db
+        networks:
+            - laravel
+
+    webserver:
+        image: nginx:alpine
+        container_name: togo_nginx
+        ports:
+            - "8080:80"
+        volumes:
+            -  .:/var/www
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - app
+        networks:
+            - laravel
+
+    todo-db:
+        image: postgres:15
+        container_name: todo-db
+        restart: always
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_DB: laravel
+            POSTGRES_USER: laravel
+            POSTGRES_PASSWORD: secret
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        networks:
+            - laravel
+networks:
+    laravel:
+
+volumes:
+    pgdata:

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Contracts\ITodo;
 use App\Http\Requests\TodoStoreRequest;
+use App\Http\Requests\TodoUpdateRequest;
 use App\Models\Todo;
 use Illuminate\Support\Collection;
 
@@ -23,13 +24,15 @@ class TodoService implements ITodo
         ]);
     }
 
-    public function update(Todo $todo)
+    public function update(Todo $todo, TodoUpdateRequest $request): Todo
     {
-        // TODO: Implement update() method.
+        $todo->update($request->validated());
+
+        return $todo;
     }
 
-    public function destroy(Todo $todo)
+    public function destroy(Todo $todo): void
     {
-        // TODO: Implement destroy() method.
+        $todo->delete();
     }
 }

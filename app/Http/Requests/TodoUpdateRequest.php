@@ -14,4 +14,13 @@ class TodoUpdateRequest extends FormRequest
             'is_completed' => ['bool']
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'title.string' => 'Поле title должно быть строкой',
+            'text.string' => 'Поле text должно быть строкой',
+            'is_completed' => 'Поле is_completed должно быть булевым',
+        ];
+    }
 }

@@ -13,4 +13,14 @@ class TodoStoreRequest extends FormRequest
             'text' => ['required', 'string'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Поле title обязательно для заполнения',
+            'title.string' => 'Поле title должно быть строкой',
+            'text.required' => 'Поле text обязательно для заполнения',
+            'text.string' => 'Поле text должно быть строкой'
+        ];
+    }
 }
